@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../models/user/user.dart';
+import '../../models/User/create_user_model/create_user_model.dart';
 
 class Connected extends StatefulWidget {
   const Connected({super.key});
@@ -10,8 +10,6 @@ class Connected extends StatefulWidget {
 }
 
 class _Connected extends State<Connected> {
-  late Future<User> futureAlbum;
-
   @override
   void initState() {
     super.initState();
@@ -29,8 +27,7 @@ class _Connected extends State<Connected> {
           title: const Text('Compte'),
         ),
         body: Center(
-          child: FutureBuilder<User>(
-            future: futureAlbum,
+          child: FutureBuilder<CreateUserModel>(
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 return Text(snapshot.data!.email.toString());

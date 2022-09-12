@@ -1,9 +1,9 @@
 import 'package:json_annotation/json_annotation.dart';
 
-part 'user.g.dart';
+part 'get_user_model.g.dart';
 
 @JsonSerializable()
-class User {
+class GetUserModel {
   int? id;
   String? email;
   String? firstName;
@@ -12,7 +12,7 @@ class User {
   bool? registrationValidated;
   int? roleId;
 
-  User({
+  GetUserModel({
     this.id,
     this.email,
     this.firstName,
@@ -22,7 +22,9 @@ class User {
     this.roleId,
   });
 
-  factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
+  factory GetUserModel.fromJson(Map<String, dynamic> json) {
+    return _$GetUserModelFromJson(json);
+  }
 
-  Map<String, dynamic> toJson() => _$UserToJson(this);
+  Map<String, dynamic> toJson() => _$GetUserModelToJson(this);
 }
