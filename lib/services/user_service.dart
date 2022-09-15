@@ -14,6 +14,26 @@ class UserService {
     HttpOverrides.global = MyHttpOverrides();
   }
 
+  Future<bool?> login(String email, String password) async {
+    try {
+      var url = Uri.parse(
+          '${ApiConstants.baseUrl}${ApiConstants.usersEndpoint}/login');
+      var response = await http.post(url,
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+          },
+          body: jsonEncode(
+              <String, String>{"email": email, "password": password}));
+      if (response.statusCode == 200) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      return false;
+    }
+  }
+
   Future<GetUserModel?> getUser(int id) async {
     try {
       var url =
@@ -53,7 +73,7 @@ class UserService {
           },
           body: const JsonEncoder().convert(createUserModel));
       if (response.statusCode == 200) {
-        return jsonDecode(response.body);
+        return GetUserModel?.fromJson(jsonDecode(response.body));
       }
     } catch (e) {
       log(e.toString());

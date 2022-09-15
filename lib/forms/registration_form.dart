@@ -7,7 +7,9 @@ import 'package:goodfood_mobile/models/user/get_user_model/get_user_model.dart';
 import 'package:goodfood_mobile/services/user_service.dart';
 
 class RegistrationForm extends StatefulWidget {
-  const RegistrationForm({super.key});
+  const RegistrationForm({super.key, this.email = "", this.errorMessage});
+  final String email;
+  final String? errorMessage;
 
   @override
   RegistrationFormState createState() {
@@ -20,7 +22,8 @@ class RegistrationFormState extends State<RegistrationForm> {
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController emailController = TextEditingController();
+    TextEditingController emailController =
+        TextEditingController(text: widget.email);
     TextEditingController passwordController = TextEditingController();
     TextEditingController passwordConfirmController = TextEditingController();
     TextEditingController phoneController = TextEditingController();
@@ -55,6 +58,9 @@ class RegistrationFormState extends State<RegistrationForm> {
                 padding: const EdgeInsets.all(10),
                 child: TextFormField(
                   controller: passwordController,
+                  obscureText: true,
+                  enableSuggestions: false,
+                  autocorrect: false,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Veuillez remplir ce champ';
@@ -71,6 +77,9 @@ class RegistrationFormState extends State<RegistrationForm> {
                 padding: const EdgeInsets.all(10),
                 child: TextFormField(
                   controller: passwordConfirmController,
+                  obscureText: true,
+                  enableSuggestions: false,
+                  autocorrect: false,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Veuillez remplir ce champ';
@@ -135,7 +144,7 @@ class RegistrationFormState extends State<RegistrationForm> {
                   height: 50,
                   padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
                   child: ElevatedButton(
-                      child: const Text("Continuer"),
+                      child: const Text("Confirmer"),
                       onPressed: () {
                         Widget route = Login(email: emailController.text);
                         if (_formKey.currentState!.validate()) {
@@ -153,16 +162,26 @@ class RegistrationFormState extends State<RegistrationForm> {
                               userService.createUser(userModel);
 
                           awaitResponse.then((getUserModel) {
-                            if (getUserModel?.id == 0) {
+                            if (getUserModel?.id == 0 || getUserModel == null) {
                               route = Register(email: emailController.text);
+                              final snackBar = SnackBar(
+                                content: const Text(
+                                    "Les mot de passes ne sont pas identiques"),
+                                action: SnackBarAction(
+                                  label: 'Fermer',
+                                  onPressed: () {},
+                                ),
+                              );
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(snackBar);
+                            } else {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => route,
+                                ),
+                              );
                             }
-
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => route,
-                              ),
-                            );
                           });
                         }
                       })),
