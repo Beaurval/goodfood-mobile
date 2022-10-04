@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:goodfood_mobile/domain/use_cases/sign_in_usecase.dart';
 import 'package:goodfood_mobile/presentation/authentication/screens/sing_up_screen.dart';
+import 'package:goodfood_mobile/presentation/authentication/viewmodels/sign_in.dart/sign_in_view_model.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class EmailLoginScreen extends HookConsumerWidget {
@@ -10,6 +12,7 @@ class EmailLoginScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    var viewModel = ref.watch(signInViewModelProvider);
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -27,21 +30,23 @@ class EmailLoginScreen extends HookConsumerWidget {
                     child: Image.asset('lib/src/images/good-food-logo.jpg')),
               ),
             ),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 15),
-              child: TextField(
-                decoration: InputDecoration(
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 15),
+              child: TextFormField(
+                controller: emailcon,
+                decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'Email',
                 ),
               ),
             ),
-            const Padding(
-              padding:
-                  EdgeInsets.only(left: 15.0, right: 15.0, top: 15, bottom: 0),
-              child: TextField(
+            Padding(
+              padding: const EdgeInsets.only(
+                  left: 15.0, right: 15.0, top: 15, bottom: 0),
+              child: TextFormField(
+                controller: passwordcon,
                 obscureText: true,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'Mot de passe',
                 ),
@@ -61,8 +66,17 @@ class EmailLoginScreen extends HookConsumerWidget {
                   color: Colors.blue, borderRadius: BorderRadius.circular(20)),
               child: TextButton(
                 onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (_) => SingUpScreen()));
+                  viewModel
+                      .signIn(emailcon.text, passwordcon.text)
+                      .then((signInResult) {
+                    if (!signInResult.isLeft) {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (_) => SingUpScreen()));
+                    } else {
+                      viewModel.showSnackBar(
+                          signInResult.left.message, context);
+                    }
+                  });
                 },
                 child: const Text(
                   'Se connecter',
