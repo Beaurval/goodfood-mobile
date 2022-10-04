@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "978869807700",
+    "project_id": "goodfood-f9521",
+    "storage_bucket": "goodfood-f9521.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:978869807700:android:5856d6c44efdd3e2bddbc1",
+        "android_client_info": {
+          "package_name": "com.goodfood.goodfood_mobile"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "978869807700-32nke0k4pm1mi6gmhgsfhbubbkt6137r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBy9GwStmWIR0-bBGhaG1Ek5ERDwGCdYcM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "978869807700-32nke0k4pm1mi6gmhgsfhbubbkt6137r.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "978869807700-kpoe2ah6np70fhfk416580fp1muvqi4f.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.goodfoodMobile"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

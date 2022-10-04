@@ -14,8 +14,7 @@ class SignUpViewModel extends ChangeNotifier {
 
   SignUpViewModel(this._signUpUser);
 
-  void signUp(CreateUserRequest userRequest, String password,
-      String passwordConfirm) async {
-    await _signUpUser.execute(userRequest, password, passwordConfirm);
+  void signUp(CreateUserRequest userRequest) async {
+    await _signUpUser.execute(userRequest);
   }
 }

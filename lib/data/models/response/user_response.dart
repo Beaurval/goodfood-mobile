@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:goodfood_mobile/domain/entities/user/user.dart';
+import 'package:goodfood_mobile/domain/entities/user/user_account.dart';
 
 class UserResponse extends Equatable {
   final int? id;
@@ -31,8 +31,8 @@ class UserResponse extends Equatable {
         roleId,
       ];
 
-  User toEntity() {
-    return User(
+  UserAccount toEntity() {
+    return UserAccount(
         email: email,
         firstName: firstName,
         id: id,

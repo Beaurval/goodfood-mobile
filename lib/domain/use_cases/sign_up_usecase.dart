@@ -4,7 +4,7 @@ import 'package:goodfood_mobile/data/models/request/create_user_request.dart';
 import 'package:goodfood_mobile/data/repository/auth_repository_impl.dart';
 import 'package:riverpod/riverpod.dart';
 
-import '../entities/user/user.dart';
+import '../entities/user/user_account.dart';
 import '../repository/auth_repository.dart';
 
 final signUpUserUseCaseProvider = Provider<SignUpUser>(
@@ -15,9 +15,8 @@ class SignUpUser {
 
   final AuthRepository _authRepository;
 
-  Future<Either<Failure, User>> execute(CreateUserRequest userRequest,
-      String password, String passwordConfirm) async {
-    return await _authRepository.signUpUser(
-        userRequest, password, passwordConfirm);
+  Future<Either<Failure, UserAccount>> execute(
+      CreateUserRequest userRequest) async {
+    return await _authRepository.signUpUser(userRequest);
   }
 }

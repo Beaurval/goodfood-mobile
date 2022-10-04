@@ -19,6 +19,13 @@ class SingUpScreen extends HookConsumerWidget {
     SignUpViewModel viewModel =
         SignUpViewModel(ref.watch(signUpUserUseCaseProvider));
 
+    var emailController = TextEditingController();
+    var passwordController = TextEditingController();
+    var passwordConfirmController = TextEditingController();
+    var firstNameController = TextEditingController();
+    var lastNameController = TextEditingController();
+    var phoneController = TextEditingController();
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -39,62 +46,65 @@ class SingUpScreen extends HookConsumerWidget {
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 15),
               child: TextFormField(
+                controller: emailController,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'Email',
                 ),
               ),
             ),
-            const Padding(
+            Padding(
               padding:
                   EdgeInsets.only(left: 15.0, right: 15.0, top: 15, bottom: 0),
-              child: TextField(
+              child: TextFormField(
+                controller: passwordController,
                 obscureText: true,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'Mot de passe',
                 ),
               ),
             ),
-            const Padding(
+            Padding(
               padding:
                   EdgeInsets.only(left: 15.0, right: 15.0, top: 15, bottom: 0),
-              child: TextField(
+              child: TextFormField(
+                controller: passwordConfirmController,
                 obscureText: true,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'Confirmer mot de passe',
                 ),
               ),
             ),
-            const Padding(
+            Padding(
               padding:
                   EdgeInsets.only(left: 15.0, right: 15.0, top: 15, bottom: 0),
-              child: TextField(
-                obscureText: true,
-                decoration: InputDecoration(
+              child: TextFormField(
+                controller: lastNameController,
+                decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'Nom',
                 ),
               ),
             ),
-            const Padding(
+            Padding(
               padding:
                   EdgeInsets.only(left: 15.0, right: 15.0, top: 15, bottom: 0),
-              child: TextField(
-                obscureText: true,
-                decoration: InputDecoration(
+              child: TextFormField(
+                controller: firstNameController,
+                decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'Prénom',
                 ),
               ),
             ),
-            const Padding(
+            Padding(
               padding:
                   EdgeInsets.only(left: 15.0, right: 15.0, top: 15, bottom: 0),
-              child: TextField(
-                obscureText: true,
-                decoration: InputDecoration(
+              child: TextFormField(
+                controller: phoneController,
+                decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'Téléphone',
                 ),
@@ -108,14 +118,14 @@ class SingUpScreen extends HookConsumerWidget {
                   color: Colors.blue, borderRadius: BorderRadius.circular(20)),
               child: TextButton(
                 onPressed: () {
-                  var userRequest = const CreateUserRequest(
-                      email: 'toto',
-                      firstName: 'firstName',
-                      lastName: 'lastName',
-                      phoneNumber: 'phoneNumber',
-                      password: 'password',
-                      passwordConfirmation: 'password');
-                  viewModel.signUp(userRequest, 'firstName', 'firstName');
+                  var userRequest = CreateUserRequest(
+                      email: emailController.text,
+                      firstName: firstNameController.text,
+                      lastName: lastNameController.text,
+                      phoneNumber: phoneController.text,
+                      password: passwordController.text,
+                      passwordConfirmation: passwordConfirmController.text);
+                  viewModel.signUp(userRequest);
 
                   // Navigator.push(context,
                   //     MaterialPageRoute(builder: (_) => SingUpScreen()));

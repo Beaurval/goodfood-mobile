@@ -1,7 +1,6 @@
 import 'package:equatable/equatable.dart';
-import 'package:goodfood_mobile/domain/entities/user/user.dart';
 
-class User extends Equatable {
+class UserAccount extends Equatable {
   final int? id;
   final String? email;
   final String? firstName;
@@ -10,7 +9,7 @@ class User extends Equatable {
   final bool? registrationValidated;
   final int? roleId;
 
-  const User({
+  const UserAccount({
     required this.id,
     required this.email,
     required this.firstName,
