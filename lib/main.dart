@@ -1,111 +1,39 @@
+import 'dart:io';
+
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:goodfood_mobile/login/connected.dart';
+import 'package:goodfood_mobile/firebase_options.dart';
+import 'package:goodfood_mobile/presentation/authentication/screens/login_method_screen.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-void main() => runApp(const SingIn());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  HttpOverrides.global = MyHttpOverrides();
+  runApp(ProviderScope(child: MyApp()));
+}
 
-class SingIn extends StatelessWidget {
-  const SingIn({Key? key}) : super(key: key);
-
-  static const String _title = 'The goodfood inscription';
-
+class MyHttpOverrides extends HttpOverrides {
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: _title,
-      home: Scaffold(
-        appBar: AppBar(title: const Text(_title)),
-        body: const MyStatefulWidget(),
-      ),
-    );
+  HttpClient createHttpClient(SecurityContext? context) {
+    return super.createHttpClient(context)
+      ..badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
   }
 }
 
-class MyStatefulWidget extends StatefulWidget {
-  const MyStatefulWidget({Key? key}) : super(key: key);
-
-  @override
-  State<MyStatefulWidget> createState() => _MyStatefulWidgetState();
-}
-
-class _MyStatefulWidgetState extends State<MyStatefulWidget> {
-  TextEditingController nameController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
-
+class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Padding(
-        padding: const EdgeInsets.all(10),
-        child: ListView(
-          children: <Widget>[
-            Container(
-                alignment: Alignment.center,
-                padding: const EdgeInsets.all(10),
-                child: const Text(
-                  'Inscription',
-                  style: TextStyle(
-                      color: Colors.blue,
-                      fontWeight: FontWeight.w500,
-                      fontSize: 30),
-                )),
-            Container(
-              padding: const EdgeInsets.all(10),
-              child: TextField(
-                controller: nameController,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Adresse mail',
-                ),
-              ),
-            ),
-            Container(
-              padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
-              child: TextField(
-                obscureText: true,
-                controller: passwordController,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Mot de passe',
-                ),
-              ),
-            ),
-            Container(
-              padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
-              child: TextField(
-                obscureText: true,
-                controller: passwordController,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Confirmez le mot de passe',
-                ),
-              ),
-            ),
-            Container(
-                height: 50,
-                padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
-                child: ElevatedButton(
-                  child: const Text("S'inscrire"),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const Connected()),
-                    );
-                  },
-                )),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                const Text('Vous possédez déjà un compte ?'),
-                TextButton(
-                  child: const Text(
-                    'Se connecter',
-                    style: TextStyle(fontSize: 20),
-                  ),
-                  onPressed: () {},
-                )
-              ],
-            ),
-          ],
-        ));
+    return MaterialApp(
+      title: 'GoodFood',
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+          bottomSheetTheme:
+              const BottomSheetThemeData(backgroundColor: Colors.transparent)),
+      home: LoginMethodScreen(),
+    );
   }
 }
