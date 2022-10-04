@@ -1,16 +1,12 @@
-import 'dart:ui';
-
-import 'package:fluttertoast/fluttertoast.dart';
-
 import 'package:flutter/material.dart';
+import 'package:goodfood_mobile/presentation/authentication/screens/sing_up_screen.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class EmailLoginScreen extends HookConsumerWidget {
+  final String? email;
   final emailcon = TextEditingController();
   final passwordcon = TextEditingController();
-  final _formkey = GlobalKey<FormState>();
-
-  EmailLoginScreen({super.key});
+  EmailLoginScreen({this.email, super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -66,7 +62,7 @@ class EmailLoginScreen extends HookConsumerWidget {
               child: TextButton(
                 onPressed: () {
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (_) => EmailLoginScreen()));
+                      MaterialPageRoute(builder: (_) => SingUpScreen()));
                 },
                 child: const Text(
                   'Se connecter',

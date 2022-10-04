@@ -26,6 +26,16 @@ class AuthRepositoryImpl implements AuthRepository {
   @override
   Future<Either<Failure, UserAccount>> signUpUser(
       CreateUserRequest user) async {
+    if ((user.passwordConfirmation != user.password) ||
+        (user.password?.isEmpty ?? true) ||
+        (user.passwordConfirmation?.isEmpty ?? true)) {
+      return const Left(
+          Failure(message: 'Les mots de passes ne correspondent pas'));
+    }
+    if (user.email?.isEmpty ?? true) {
+      return const Left(Failure(message: 'Veuillez renseigner un email'));
+    }
+
     var firebaseRegistrationResult =
         await addUserToFirebase(user.email ?? '', user.password ?? '');
 
@@ -52,6 +62,9 @@ class AuthRepositoryImpl implements AuthRepository {
       );
       return Right(credential);
     } on FirebaseAuthException catch (e) {
+      if (e.code == 'invalid-email') {
+        return const Left(Failure(message: 'L\'email n\'est pas valide'));
+      }
       if (e.code == 'weak-password') {
         return const Left(Failure(message: 'Le mot de passe est trop faible.'));
       } else if (e.code == 'email-already-in-use') {

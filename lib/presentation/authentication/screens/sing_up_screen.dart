@@ -1,10 +1,8 @@
-import 'dart:ui';
-
-import 'package:fluttertoast/fluttertoast.dart';
-
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:goodfood_mobile/data/models/request/create_user_request.dart';
 import 'package:goodfood_mobile/domain/use_cases/sign_up_usecase.dart';
+import 'package:goodfood_mobile/presentation/authentication/screens/login_method/email_login_screen.dart';
 import 'package:goodfood_mobile/presentation/authentication/viewmodels/sign_up/sign_up_view_model.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -117,7 +115,7 @@ class SingUpScreen extends HookConsumerWidget {
               decoration: BoxDecoration(
                   color: Colors.blue, borderRadius: BorderRadius.circular(20)),
               child: TextButton(
-                onPressed: () {
+                onPressed: () async {
                   var userRequest = CreateUserRequest(
                       email: emailController.text,
                       firstName: firstNameController.text,
@@ -125,13 +123,22 @@ class SingUpScreen extends HookConsumerWidget {
                       phoneNumber: phoneController.text,
                       password: passwordController.text,
                       passwordConfirmation: passwordConfirmController.text);
-                  viewModel.signUp(userRequest);
 
-                  // Navigator.push(context,
-                  //     MaterialPageRoute(builder: (_) => SingUpScreen()));
+                  viewModel.signUp(userRequest).then((signUpResult) {
+                    if (signUpResult.isLeft) {
+                      viewModel.showSnackBar(
+                          signUpResult.left.message, context);
+                    } else {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (_) =>
+                                  EmailLoginScreen(email: userRequest.email)));
+                    }
+                  });
                 },
                 child: const Text(
-                  'S\inscrire',
+                  'S\'inscrire',
                   style: TextStyle(color: Colors.white, fontSize: 25),
                 ),
               ),
