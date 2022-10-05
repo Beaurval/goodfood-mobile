@@ -1,7 +1,4 @@
-import 'dart:convert';
-
 import 'package:equatable/equatable.dart';
-import 'package:goodfood_mobile/domain/entities/user/user_account.dart';
 
 class CreateUserRequest extends Equatable {
   final String? email;

@@ -1,5 +1,4 @@
 import 'package:either_dart/either.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:goodfood_mobile/core/failure.dart';
 import 'package:goodfood_mobile/data/models/request/create_user_request.dart';

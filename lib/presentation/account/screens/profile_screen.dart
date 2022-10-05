@@ -4,6 +4,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../home/screens/home_screen.dart';
 
 class ProfileScreen extends HookConsumerWidget {
+  const ProfileScreen({super.key});
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
@@ -18,12 +20,14 @@ class ProfileScreen extends HookConsumerWidget {
                 children: <Widget>[
                   ListTile(
                     onTap: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (_) => HomeScreen()));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (_) => const HomeScreen()));
                     },
                     visualDensity: VisualDensity.compact,
-                    leading: Icon(Icons.person),
-                    title: Text('Informations du compte'),
+                    leading: const Icon(Icons.person),
+                    title: const Text('Informations du compte'),
                   ),
                   const ListTile(
                     leading: Icon(Icons.photo_album),

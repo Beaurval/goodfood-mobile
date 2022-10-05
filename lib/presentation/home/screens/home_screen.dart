@@ -3,6 +3,8 @@ import 'package:goodfood_mobile/presentation/common/widgets/custom_app_bar.dart'
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class HomeScreen extends HookConsumerWidget {
+  const HomeScreen({super.key});
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return const Scaffold(appBar: CustomAppBar());

@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/button_list.dart';
@@ -71,7 +70,7 @@ class LoginMethodScreen extends HookConsumerWidget {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => HomeScreen()))
+                                    builder: (context) => const HomeScreen()))
                           }
                       },
                       text: 'Se connecter par email',

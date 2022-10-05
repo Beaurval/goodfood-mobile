@@ -70,8 +70,10 @@ class EmailLoginScreen extends HookConsumerWidget {
                       .signIn(emailcon.text, passwordcon.text)
                       .then((signInResult) {
                     if (!signInResult.isLeft) {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (_) => HomeScreen()));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (_) => const HomeScreen()));
                     } else {
                       viewModel.showSnackBar(
                           signInResult.left.message, context);
