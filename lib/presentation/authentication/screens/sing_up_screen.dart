@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:goodfood_mobile/data/models/request/create_user_request.dart';
 import 'package:goodfood_mobile/domain/use_cases/sign_up_usecase.dart';
 import 'package:goodfood_mobile/presentation/authentication/screens/login_method/email_login_screen.dart';
@@ -42,7 +41,7 @@ class SingUpScreen extends HookConsumerWidget {
               ),
             ),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 15),
+              padding: const EdgeInsets.symmetric(horizontal: 15),
               child: TextFormField(
                 controller: emailController,
                 decoration: const InputDecoration(
@@ -52,8 +51,8 @@ class SingUpScreen extends HookConsumerWidget {
               ),
             ),
             Padding(
-              padding:
-                  EdgeInsets.only(left: 15.0, right: 15.0, top: 15, bottom: 0),
+              padding: const EdgeInsets.only(
+                  left: 15.0, right: 15.0, top: 15, bottom: 0),
               child: TextFormField(
                 controller: passwordController,
                 obscureText: true,
@@ -64,8 +63,8 @@ class SingUpScreen extends HookConsumerWidget {
               ),
             ),
             Padding(
-              padding:
-                  EdgeInsets.only(left: 15.0, right: 15.0, top: 15, bottom: 0),
+              padding: const EdgeInsets.only(
+                  left: 15.0, right: 15.0, top: 15, bottom: 0),
               child: TextFormField(
                 controller: passwordConfirmController,
                 obscureText: true,
@@ -76,8 +75,8 @@ class SingUpScreen extends HookConsumerWidget {
               ),
             ),
             Padding(
-              padding:
-                  EdgeInsets.only(left: 15.0, right: 15.0, top: 15, bottom: 0),
+              padding: const EdgeInsets.only(
+                  left: 15.0, right: 15.0, top: 15, bottom: 0),
               child: TextFormField(
                 controller: lastNameController,
                 decoration: const InputDecoration(
@@ -87,8 +86,8 @@ class SingUpScreen extends HookConsumerWidget {
               ),
             ),
             Padding(
-              padding:
-                  EdgeInsets.only(left: 15.0, right: 15.0, top: 15, bottom: 0),
+              padding: const EdgeInsets.only(
+                  left: 15.0, right: 15.0, top: 15, bottom: 0),
               child: TextFormField(
                 controller: firstNameController,
                 decoration: const InputDecoration(
@@ -98,8 +97,8 @@ class SingUpScreen extends HookConsumerWidget {
               ),
             ),
             Padding(
-              padding:
-                  EdgeInsets.only(left: 15.0, right: 15.0, top: 15, bottom: 0),
+              padding: const EdgeInsets.only(
+                  left: 15.0, right: 15.0, top: 15, bottom: 0),
               child: TextFormField(
                 controller: phoneController,
                 decoration: const InputDecoration(

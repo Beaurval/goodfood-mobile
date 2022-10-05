@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
-import 'package:either_dart/either.dart';
 import 'package:goodfood_mobile/data/models/request/create_user_request.dart';
 import 'package:goodfood_mobile/data/models/response/user_response.dart';
 import 'package:riverpod/riverpod.dart';
@@ -29,11 +28,9 @@ class UserApi {
 
       return [];
     } on DioError catch (err) {
-      print(err);
       throw Failure(
           message: err.response?.statusMessage ?? 'Something went wrong');
     } on SocketException catch (err) {
-      print(err);
       throw const Failure(message: 'Please check your connexion.');
     }
   }

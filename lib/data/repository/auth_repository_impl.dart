@@ -19,8 +19,30 @@ class AuthRepositoryImpl implements AuthRepository {
   AuthRepositoryImpl(this._userApi);
 
   @override
-  Future<void> signInUser(String mail, String password) {
-    throw UnimplementedError();
+  Future<Either<Failure, UserCredential>> signInUser(
+      String mail, String password) async {
+    if (mail.isEmpty || password.isEmpty) {
+      return const Left(Failure(message: 'Veuillez remplir les champs.'));
+    }
+
+    try {
+      var signInResult = await FirebaseAuth.instance
+          .signInWithEmailAndPassword(email: mail, password: password);
+      if (signInResult.user?.emailVerified ?? true) {
+        return Right(signInResult);
+      }
+      return const Left(Failure(message: "Veuillez vérifier votre email."));
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        return const Left(Failure(message: 'Ce compte n\'existe pas.'));
+      } else if (e.code == 'wrong-password') {
+        return const Left(Failure(message: 'Mot de passe incorrect.'));
+      } else if (e.code == 'invalid-email') {
+        return const Left(Failure(message: 'Veuillez saisir un email valide.'));
+      }
+    }
+
+    return const Left(Failure(message: 'Une erreur s\'est produite'));
   }
 
   @override
