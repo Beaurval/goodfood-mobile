@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:goodfood_mobile/domain/use_cases/sign_in_usecase.dart';
-import 'package:goodfood_mobile/presentation/authentication/screens/sing_up_screen.dart';
 import 'package:goodfood_mobile/presentation/authentication/viewmodels/sign_in.dart/sign_in_view_model.dart';
+import 'package:goodfood_mobile/presentation/home/screens/home_screen.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class EmailLoginScreen extends HookConsumerWidget {
   final String? email;
   final emailcon = TextEditingController();
   final passwordcon = TextEditingController();
+
   EmailLoginScreen({this.email, super.key});
 
   @override
@@ -71,7 +71,7 @@ class EmailLoginScreen extends HookConsumerWidget {
                       .then((signInResult) {
                     if (!signInResult.isLeft) {
                       Navigator.push(context,
-                          MaterialPageRoute(builder: (_) => SingUpScreen()));
+                          MaterialPageRoute(builder: (_) => HomeScreen()));
                     } else {
                       viewModel.showSnackBar(
                           signInResult.left.message, context);

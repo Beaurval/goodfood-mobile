@@ -1,16 +1,18 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/button_list.dart';
 import 'package:flutter_signin_button/button_view.dart';
 import 'package:goodfood_mobile/presentation/authentication/screens/login_method/email_login_screen.dart';
 import 'package:goodfood_mobile/presentation/authentication/screens/sing_up_screen.dart';
+import 'package:goodfood_mobile/presentation/home/screens/home_screen.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:morphable_shape/morphable_shape.dart';
 
 class LoginMethodScreen extends HookConsumerWidget {
-  const LoginMethodScreen({super.key});
-
+  LoginMethodScreen({super.key});
+  final FirebaseAuth auth = FirebaseAuth.instance;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     ShapeBorder rectangle = RectangleShapeBorder.fromJson(jsonDecode(
@@ -57,10 +59,20 @@ class LoginMethodScreen extends HookConsumerWidget {
                     child: SignInButton(
                       Buttons.Email,
                       onPressed: () => {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => EmailLoginScreen()))
+                        if (auth.currentUser == null)
+                          {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => EmailLoginScreen()))
+                          }
+                        else
+                          {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => HomeScreen()))
+                          }
                       },
                       text: 'Se connecter par email',
                     )),
