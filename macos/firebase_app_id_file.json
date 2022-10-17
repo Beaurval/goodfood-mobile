@@ -1,11 +1,7 @@
 {
   "file_generated_by": "FlutterFire CLI",
   "purpose": "FirebaseAppID & ProjectID for this Firebase app in this directory",
-<<<<<<< HEAD
-  "GOOGLE_APP_ID": "1:978869807700:ios:743ed661f2edff1dbddbc1",
-=======
   "GOOGLE_APP_ID": "1:978869807700:ios:87116e4470bcc6acbddbc1",
->>>>>>> develop
   "FIREBASE_PROJECT_ID": "goodfood-f9521",
   "GCM_SENDER_ID": "978869807700"
 }
