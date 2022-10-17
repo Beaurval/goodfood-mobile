@@ -1,83 +1,72 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
-
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:goodfood_mobile/models/user/get_user_model/get_user_model.dart';
+import 'package:goodfood_mobile/repository/user_repository.dart';
 import 'package:http/http.dart' as http;
-
 import '../config/api_constants.dart';
 import '../config/http_overide.dart';
 import '../models/User/create_user_model/create_user_model.dart';
+import 'authentication_service.dart';
 
 class UserService {
+  var auth = AuthenticationService();
+  UserRepository userRepository = UserRepository();
+
   UserService() {
     HttpOverrides.global = MyHttpOverrides();
   }
 
-  Future<bool?> login(String email, String password) async {
-    try {
-      var url = Uri.parse(
-          '${ApiConstants.baseUrl}${ApiConstants.usersEndpoint}/login');
-      var response = await http.post(url,
-          headers: <String, String>{
-            'Content-Type': 'application/json; charset=UTF-8',
-          },
-          body: jsonEncode(
-              <String, String>{"email": email, "password": password}));
-      if (response.statusCode == 200) {
-        return true;
-      } else {
-        return false;
-      }
-    } catch (e) {
-      return false;
+  Future<GetUserModel?> signInUser(String mail, String password) async {
+    GetUserModel? userExist = await getUserByMail(mail);
+    UserCredential? userCredential = await auth.signIn(mail, password);
+
+    if (userCredential == null) {
+      return null;
     }
+
+    return getUserByMail(mail);
   }
 
-  Future<GetUserModel?> getUser(int id) async {
-    try {
-      var url =
-          Uri.parse('${ApiConstants.baseUrl}${ApiConstants.usersEndpoint}/id');
-      var response = await http.get(url);
-      if (response.statusCode == 200) {
-        GetUserModel user = GetUserModel.fromJson(jsonDecode(response.body));
-        return user;
-      }
-    } catch (e) {
-      log(e.toString());
-    }
-    return null;
+  Future<GetUserModel?> getUserById(int id) async {
+    return userRepository.getUserById(id);
   }
 
-  Future<bool?> userExistWithMail(String email) async {
-    try {
-      var url = Uri.parse(
-          '${ApiConstants.baseUrl}${ApiConstants.usersEndpoint}/exist?email=$email');
-      var response = await http.get(url);
-      if (response.statusCode == 200) {
-        return jsonDecode(response.body);
-      }
-    } catch (e) {
-      log(e.toString());
-    }
-    return null;
+  Future<GetUserModel?> getUserByMail(String mail) async {
+    return userRepository.getUserByMail(mail);
   }
 
-  Future<GetUserModel?> createUser(CreateUserModel createUserModel) async {
-    try {
-      var url =
-          Uri.parse('${ApiConstants.baseUrl}${ApiConstants.usersEndpoint}');
-      var response = await http.post(url,
-          headers: <String, String>{
-            'Content-Type': 'application/json; charset=UTF-8',
-          },
-          body: const JsonEncoder().convert(createUserModel));
-      if (response.statusCode == 200) {
-        return GetUserModel?.fromJson(jsonDecode(response.body));
-      }
-    } catch (e) {
-      log(e.toString());
+  Future<bool> userExistWithMail(String mail) async {
+    GetUserModel? user = await getUserByMail(mail);
+
+    return (user == null) ? false : true;
+  }
+
+  //Firebase
+  Future<GetUserModel?> signUpUser(CreateUserModel createUserModel) async {
+    if (createUserModel.email == null || createUserModel.password == null) {
+      return null;
     }
-    return null;
+
+    UserCredential? userCredential =
+        await auth.signUp(createUserModel.email!, createUserModel.password!);
+    if (userCredential == null) {
+      return null;
+    }
+
+    sendEmailVerification(userCredential.user!);
+
+    var userCreated = await userRepository.createUser(createUserModel);
+    if (userCreated == null) {
+      return null;
+    }
+
+    return userCreated;
+  }
+
+  void sendEmailVerification(User user) {
+    user.sendEmailVerification();
   }
 }

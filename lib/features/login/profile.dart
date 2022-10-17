@@ -1,46 +1,28 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import '../../models/User/create_user_model/create_user_model.dart';
+class Profile extends StatelessWidget {
+  const Profile({super.key});
 
-class Connected extends StatefulWidget {
-  const Connected({super.key});
+  Widget userIsConnected() {
+    Widget state = const Text('error');
 
-  @override
-  State<Connected> createState() => _Connected();
-}
-
-class _Connected extends State<Connected> {
-  @override
-  void initState() {
-    super.initState();
+    FirebaseAuth.instance.authStateChanges().listen((User? user) {
+      if (user == null) {
+        state = const Text('User is currently signed out!');
+      } else {
+        state = const Text('User is signed in!');
+      }
+    });
+    return state;
   }
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Profile',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Compte'),
-        ),
-        body: Center(
-          child: FutureBuilder<CreateUserModel>(
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                return Text(snapshot.data!.email.toString());
-              } else if (snapshot.hasError) {
-                return Text('${snapshot.error}');
-              }
-
-              // By default, show a loading spinner.
-              return const CircularProgressIndicator();
-            },
-          ),
-        ),
-      ),
+    String appTitle = 'Profil';
+    return Scaffold(
+      appBar: AppBar(title: Text(appTitle)),
+      body: userIsConnected(),
     );
   }
 }

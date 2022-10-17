@@ -1,11 +1,14 @@
 // Create a Form widget.
 import 'package:flutter/material.dart';
 import 'package:goodfood_mobile/features/login/login.dart';
-import 'package:goodfood_mobile/features/login/register.dart';
+import 'package:goodfood_mobile/features/login/profile.dart';
+import 'package:goodfood_mobile/models/user/get_user_model/get_user_model.dart';
 import 'package:goodfood_mobile/services/user_service.dart';
 
 class LoginForm extends StatefulWidget {
-  const LoginForm({super.key});
+  final String email;
+
+  const LoginForm({super.key, this.email = ""});
 
   @override
   LoginFormState createState() {
@@ -18,8 +21,10 @@ class LoginFormState extends State<LoginForm> {
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController nameController = TextEditingController();
-    TextEditingController passwordController = TextEditingController();
+    TextEditingController emailController =
+        TextEditingController(text: widget.email);
+    TextEditingController passwordController =
+        TextEditingController(text: "MdpSecure");
     var userService = UserService();
 
     return Form(
@@ -31,7 +36,7 @@ class LoginFormState extends State<LoginForm> {
               Container(
                 padding: const EdgeInsets.all(10),
                 child: TextFormField(
-                  controller: nameController,
+                  controller: emailController,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Veuillez entrer un mail valide';
@@ -68,13 +73,15 @@ class LoginFormState extends State<LoginForm> {
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
                           Widget route;
-                          Future<bool?> awaitResponse = userService
-                              .userExistWithMail(nameController.text);
-                          awaitResponse.then((userExist) {
-                            if (userExist ?? true) {
-                              route = Login(email: nameController.text);
+                          Future<GetUserModel?> awaitLoginResponse =
+                              userService.signInUser(emailController.text,
+                                  passwordController.text);
+
+                          awaitLoginResponse.then((userModel) {
+                            if (userModel != null) {
+                              route = const Profile();
                             } else {
-                              route = Register(email: nameController.text);
+                              route = Login(email: emailController.text);
                             }
 
                             Navigator.push(

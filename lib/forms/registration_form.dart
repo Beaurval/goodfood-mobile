@@ -159,7 +159,7 @@ class RegistrationFormState extends State<RegistrationForm> {
                               passwordConfirmController.text;
 
                           Future<GetUserModel?> awaitResponse =
-                              userService.createUser(userModel);
+                              userService.signUpUser(userModel);
 
                           awaitResponse.then((getUserModel) {
                             if (getUserModel?.id == 0 || getUserModel == null) {
