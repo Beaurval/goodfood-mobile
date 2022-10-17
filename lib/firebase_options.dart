@@ -67,7 +67,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '978869807700',
     projectId: 'goodfood-f9521',
     storageBucket: 'goodfood-f9521.appspot.com',
-    iosClientId: '978869807700-kpoe2ah6np70fhfk416580fp1muvqi4f.apps.googleusercontent.com',
+    iosClientId:
+        '978869807700-kpoe2ah6np70fhfk416580fp1muvqi4f.apps.googleusercontent.com',
     iosBundleId: 'com.example.goodfoodMobile',
   );
 
@@ -77,7 +78,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '978869807700',
     projectId: 'goodfood-f9521',
     storageBucket: 'goodfood-f9521.appspot.com',
-    iosClientId: '978869807700-kpoe2ah6np70fhfk416580fp1muvqi4f.apps.googleusercontent.com',
+    iosClientId:
+        '978869807700-kpoe2ah6np70fhfk416580fp1muvqi4f.apps.googleusercontent.com',
     iosBundleId: 'com.example.goodfoodMobile',
   );
 }
