@@ -63,21 +63,23 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyATDstTDe8VT3Hl1QF7IHR0-68sxk-_Nl0',
-    appId: '1:978869807700:ios:743ed661f2edff1dbddbc1',
+    appId: '1:978869807700:ios:87116e4470bcc6acbddbc1',
     messagingSenderId: '978869807700',
     projectId: 'goodfood-f9521',
     storageBucket: 'goodfood-f9521.appspot.com',
-    iosClientId: '978869807700-kpoe2ah6np70fhfk416580fp1muvqi4f.apps.googleusercontent.com',
+    iosClientId:
+        '978869807700-kpoe2ah6np70fhfk416580fp1muvqi4f.apps.googleusercontent.com',
     iosBundleId: 'com.example.goodfoodMobile',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
     apiKey: 'AIzaSyATDstTDe8VT3Hl1QF7IHR0-68sxk-_Nl0',
-    appId: '1:978869807700:ios:743ed661f2edff1dbddbc1',
+    appId: '1:978869807700:ios:87116e4470bcc6acbddbc1',
     messagingSenderId: '978869807700',
     projectId: 'goodfood-f9521',
     storageBucket: 'goodfood-f9521.appspot.com',
-    iosClientId: '978869807700-kpoe2ah6np70fhfk416580fp1muvqi4f.apps.googleusercontent.com',
+    iosClientId:
+        '978869807700-kpoe2ah6np70fhfk416580fp1muvqi4f.apps.googleusercontent.com',
     iosBundleId: 'com.example.goodfoodMobile',
   );
 }
