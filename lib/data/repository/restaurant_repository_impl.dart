@@ -16,7 +16,7 @@ class RestaurantRepositoryImpl extends RestaurantRepository {
 
   @override
   Future<Either<Failure, List<Restaurant>>> getRestaurants() async {
-    var repositoryResult = await _restaurantApi.getUsers();
+    var repositoryResult = await _restaurantApi.getRestaurants();
     if (repositoryResult.isLeft) {
       return Left(repositoryResult.left);
     }

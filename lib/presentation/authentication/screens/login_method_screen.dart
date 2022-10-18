@@ -6,6 +6,7 @@ import 'package:flutter_signin_button/button_view.dart';
 import 'package:goodfood_mobile/presentation/authentication/screens/login_method/email_login_screen.dart';
 import 'package:goodfood_mobile/presentation/authentication/screens/sing_up_screen.dart';
 import 'package:goodfood_mobile/presentation/home/screens/home_screen.dart';
+import 'package:goodfood_mobile/presentation/restaurant/screens/restaurant_screen.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:morphable_shape/morphable_shape.dart';
 
@@ -58,7 +59,7 @@ class LoginMethodScreen extends HookConsumerWidget {
                     child: SignInButton(
                       Buttons.Email,
                       onPressed: () => {
-                        if (auth.currentUser == null)
+                        if (auth.currentUser != null)
                           {
                             Navigator.push(
                                 context,
@@ -70,7 +71,7 @@ class LoginMethodScreen extends HookConsumerWidget {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => const HomeScreen()))
+                                    builder: (context) => const RestaurantScreen()))
                           }
                       },
                       text: 'Se connecter par email',

@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:goodfood_mobile/data/api/config_api.dart';
 import 'package:goodfood_mobile/data/models/request/create_user_request.dart';
 import 'package:goodfood_mobile/data/models/response/user_response.dart';
 import 'package:riverpod/riverpod.dart';
@@ -12,8 +13,8 @@ import '../../core/failure.dart';
 final userApiProvider = Provider<UserApi>((ref) => UserApi());
 
 class UserApi {
-  static const String baseUrl = "https://10.0.2.2:7267/api";
-  static const String userEndpoint = "/users";
+  static const String baseUrl = ConfigApi.baseUrl;
+  static const String userEndpoint = ConfigApi.usersEndpoint;
 
   Future<List<UserResponse>> getUsers() async {
     try {
