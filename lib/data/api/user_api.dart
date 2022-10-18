@@ -5,6 +5,7 @@ import 'package:dio/dio.dart';
 import 'package:goodfood_mobile/data/models/request/create_user_with_role_request.dart';
 import 'package:goodfood_mobile/data/models/request/update_user_request.dart';
 import 'package:goodfood_mobile/data/models/response/create_user__with_role_response.dart';
+import 'package:goodfood_mobile/data/api/config_api.dart';
 import 'package:goodfood_mobile/data/models/request/create_user_request.dart';
 import 'package:goodfood_mobile/data/models/response/user_response.dart';
 import 'package:riverpod/riverpod.dart';
@@ -15,8 +16,8 @@ import '../../core/failure.dart';
 final userApiProvider = Provider<UserApi>((ref) => UserApi());
 
 class UserApi {
-  static const String baseUrl = "http://20.124.42.95/api";
-  static const String userEndpoint = "/users";
+  static const String baseUrl = ConfigApi.baseUrl;
+  static const String userEndpoint = ConfigApi.usersEndpoint;
 
   Future<List<UserResponse>> getUsers() async {
     try {
