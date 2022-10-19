@@ -130,7 +130,7 @@ class AddUserScreen extends HookConsumerWidget {
                       roleId: list.indexOf(selectedValue.value)));
                 },
                 child: const Text(
-                  'S\'inscrire',
+                  'Confirmer',
                   style: TextStyle(color: Colors.white, fontSize: 25),
                 ),
               ),

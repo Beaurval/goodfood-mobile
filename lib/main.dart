@@ -4,6 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:goodfood_mobile/firebase_options.dart';
 import 'package:goodfood_mobile/presentation/admin/screens/add_user_screen.dart';
+import 'package:goodfood_mobile/presentation/admin/screens/admin_home_screen.dart';
 import 'package:goodfood_mobile/presentation/authentication/screens/login_method_screen.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -36,7 +37,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
           bottomSheetTheme:
               const BottomSheetThemeData(backgroundColor: Colors.transparent)),
-      home: AddUserScreen(),
+      home: AdminHomeScreen(),
     );
   }
 }
