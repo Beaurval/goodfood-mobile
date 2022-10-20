@@ -6,6 +6,7 @@ import 'package:goodfood_mobile/firebase_options.dart';
 import 'package:goodfood_mobile/presentation/admin/screens/add_user_screen.dart';
 import 'package:goodfood_mobile/presentation/admin/screens/admin_home_screen.dart';
 import 'package:goodfood_mobile/presentation/authentication/screens/login_method_screen.dart';
+import 'package:goodfood_mobile/presentation/home/screens/home_screen.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 void main() async {
