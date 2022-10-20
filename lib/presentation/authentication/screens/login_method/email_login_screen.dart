@@ -73,7 +73,7 @@ class EmailLoginScreen extends HookConsumerWidget {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (_) => const HomeScreen()));
+                              builder: (_) => HomeScreen()));
                     } else {
                       viewModel.showSnackBar(
                           signInResult.left.message, context);

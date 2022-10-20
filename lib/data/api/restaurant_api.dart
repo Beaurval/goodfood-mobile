@@ -11,10 +11,10 @@ final restaurantApiProvider = Provider<RestaurantApi>((ref) => RestaurantApi());
 
 class RestaurantApi {
   static const String baseUrl = ConfigApi.baseUrl;
-  static const String userEndpoint = ConfigApi.usersEndpoint;
+  static const String providerEndpoint = ConfigApi.providerEndpoint;
 
   Future<Either<Failure, List<RestaurantResponse>>> getRestaurants() async {
-    final response = await Dio().get("$baseUrl$userEndpoint");
+    final response = await Dio().get("$baseUrl$providerEndpoint");
     //récupère la réponse
     if (response.statusCode == 200) {
       final results = List<Map<String, dynamic>>.from(response.data);
@@ -28,7 +28,7 @@ class RestaurantApi {
   }
 
   Future<Either<Failure, List<RestaurantResponse>>> getDetailRestaurant(id) async {
-    final response = await Dio().get("$baseUrl$userEndpoint/${id}");
+    final response = await Dio().get("$baseUrl$providerEndpoint/${id}");
     //récupère la réponse
     if (response.statusCode == 200) {
       final results = List<Map<String, dynamic>>.from(response.data);
