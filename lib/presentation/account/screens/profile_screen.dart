@@ -23,7 +23,7 @@ class ProfileScreen extends HookConsumerWidget {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (_) => const HomeScreen()));
+                              builder: (_) => HomeScreen()));
                     },
                     visualDensity: VisualDensity.compact,
                     leading: const Icon(Icons.person),
