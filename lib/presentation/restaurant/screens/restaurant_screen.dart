@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:goodfood_mobile/data/commandeController.dart';
 import 'package:goodfood_mobile/domain/entities/user/restaurant.dart';
 import 'package:goodfood_mobile/presentation/commande/commande_screen.dart';
 import 'package:goodfood_mobile/presentation/common/widgets/product_list_tile.dart';
@@ -19,10 +20,8 @@ class RestaurantScreen extends StatefulWidget {
 
 class _RestaurantScreenState extends State<RestaurantScreen> {
   final Restaurant data;
-  var panier = [];
   double price = 0.0;
   var dataRestaurant;
-  var produits;
   _RestaurantScreenState(this.data);
 
   Future<List<Map<String, dynamic>>> getProduitRestaurant() async {
@@ -40,7 +39,7 @@ class _RestaurantScreenState extends State<RestaurantScreen> {
 
   updatePanier(int index, counter){
     setState(() {
-      this.panier[index] = counter;
+      CommandeController.panier[index] = counter;
     });
     calculatePrice();
   }
@@ -48,8 +47,8 @@ class _RestaurantScreenState extends State<RestaurantScreen> {
   calculatePrice(){
     double new_price = 0.0;
 
-    panier.asMap().forEach((key, value) {
-      new_price += (double.parse(value.toString()) * produits[key]['price']);
+    CommandeController.panier.asMap().forEach((key, value) {
+      new_price += (double.parse(value.toString()) * CommandeController.produit[key]['price']);
     });
     setState(() {
       price = new_price;
@@ -61,6 +60,7 @@ class _RestaurantScreenState extends State<RestaurantScreen> {
     super.initState();
     dataRestaurant = getProduitRestaurant();
     price = 0.0;
+    CommandeController.restaurantId = data.id;
   }
 
   @override
@@ -78,7 +78,7 @@ class _RestaurantScreenState extends State<RestaurantScreen> {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => CommandeScreen(panier, produits, updatePanier)));
+                      builder: (context) => CommandeScreen(CommandeController.produit, updatePanier)));
             }
           },
           icon: const Icon(Icons.shopping_bag),
@@ -89,8 +89,8 @@ class _RestaurantScreenState extends State<RestaurantScreen> {
             future: dataRestaurant,
             builder: (BuildContext context,
                 AsyncSnapshot<List<Map<String, dynamic>>> snapshot) {
-              produits = snapshot.connectionState != ConnectionState.waiting
-                  ? snapshot.data
+              CommandeController.produit = snapshot.connectionState != ConnectionState.waiting
+                  ? snapshot.data!
                   : [];
               return CustomScrollView(
                 slivers: [
@@ -109,7 +109,7 @@ class _RestaurantScreenState extends State<RestaurantScreen> {
                       background: data!.providerImage!,
                     ),
                   ),
-                  SliverAppBar(
+                  const SliverAppBar(
                     automaticallyImplyLeading: false,
                     flexibleSpace: FlexibleSpaceBar(
                       title: Text('Liste des produits disponible'),
@@ -120,16 +120,16 @@ class _RestaurantScreenState extends State<RestaurantScreen> {
                       (BuildContext context, int index) {
                         if (snapshot.connectionState !=
                             ConnectionState.waiting) {
-                          var produits = snapshot.connectionState != ConnectionState.waiting
-                              ? snapshot.data
+                          CommandeController.produit = snapshot.connectionState != ConnectionState.waiting
+                              ? snapshot.data!
                               : [];
-                          if(!this.panier.asMap().containsKey(index)){
-                            this.panier.insert(index, 0);
+                          if(!CommandeController.panier.asMap().containsKey(index)){
+                            CommandeController.panier.insert(index, 0);
                           }
-                          return ProductListTile(produits![index], this.panier[index], index, updatePanier);
+                          return ProductListTile(CommandeController.produit![index], CommandeController.panier[index], index, updatePanier);
                         }
                       },
-                      childCount: produits!.length, // 1000 list items
+                      childCount: CommandeController.produit!.length, // 1000 list items
                     ),
                   ),
                 ],

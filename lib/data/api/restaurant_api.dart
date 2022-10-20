@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:either_dart/either.dart';
 import 'package:goodfood_mobile/core/failure.dart';
 import 'package:goodfood_mobile/data/api/config_api.dart';
+import 'package:goodfood_mobile/data/commandeController.dart';
 import 'package:goodfood_mobile/data/models/response/restaurant_response.dart';
 import 'package:riverpod/riverpod.dart';
 
