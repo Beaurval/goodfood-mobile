@@ -38,7 +38,7 @@ class _RestaurantScreenState extends State<RestaurantScreen> {
     return [];
   }
 
-  udpatePanier(int index, counter){
+  updatePanier(int index, counter){
     setState(() {
       this.panier[index] = counter;
     });
@@ -50,7 +50,6 @@ class _RestaurantScreenState extends State<RestaurantScreen> {
 
     panier.asMap().forEach((key, value) {
       new_price += (double.parse(value.toString()) * produits[key]['price']);
-      debugPrint(new_price.toString());
     });
     setState(() {
       price = new_price;
@@ -79,7 +78,7 @@ class _RestaurantScreenState extends State<RestaurantScreen> {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => const CommandeScreen()));
+                      builder: (context) => CommandeScreen(panier, produits, updatePanier)));
             }
           },
           icon: const Icon(Icons.shopping_bag),
@@ -127,7 +126,7 @@ class _RestaurantScreenState extends State<RestaurantScreen> {
                           if(!this.panier.asMap().containsKey(index)){
                             this.panier.insert(index, 0);
                           }
-                          return ProductListTile(produits![index], this.panier[index], index, udpatePanier);
+                          return ProductListTile(produits![index], this.panier[index], index, updatePanier);
                         }
                       },
                       childCount: produits!.length, // 1000 list items
