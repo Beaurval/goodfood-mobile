@@ -51,21 +51,16 @@ class _CommandeScreenState extends State<CommandeScreen> {
     return list;
   }
 
-  showAlertDialog(BuildContext context) {
+  showAlertDialog(BuildContext context, String message, callback) {
 
     Widget continueButton = TextButton(
       child: Text("Retour"),
-      onPressed: () {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => HomeScreen()));
-      },
+      onPressed: callback,
     );
 
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
-      title: Text("La commande a bien été envoyé"),
+      title: Text(message),
       actions: [
         continueButton,
       ],
@@ -146,7 +141,16 @@ class _CommandeScreenState extends State<CommandeScreen> {
                   style: style,
                   onPressed: () {
                     CommandeController.createCommande().then((e) {
-                      showAlertDialog(context);
+                      if(e == 200){
+                        showAlertDialog(context, "La commande a bien été envoyé",() {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => HomeScreen()));
+                        });
+                      }else {
+                        showAlertDialog(context, "Erreur lors de l'envoi de la commande", () {});
+                      }
                     });
                   },
                   child: const Text('Valider la Commande'),
@@ -155,9 +159,9 @@ class _CommandeScreenState extends State<CommandeScreen> {
             )),
         body: Center(
             child: Container(
-          width: MediaQuery.of(context).size.height * 0.5 > 400.0
-              ? MediaQuery.of(context).size.height * 0.5
-              : 400.0,
+          // width: MediaQuery.of(context).size.height * 0.5 > 400.0
+          //     ? MediaQuery.of(context).size.height * 0.5
+          //     : 400.0,
           child: ListView(
             children: [
               ListTile(title: Text("Récap de la commande")),

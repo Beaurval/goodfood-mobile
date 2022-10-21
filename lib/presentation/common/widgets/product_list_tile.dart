@@ -30,8 +30,10 @@ class _ProductListTileState extends State<ProductListTile> {
       title: Text(produit['name']!),
       subtitle: Text(produit['price'].toString() + "€"),
       trailing: Container(
-          width: 100.0,
+        alignment: Alignment.centerRight,
+        width: MediaQuery.of(context).size.width * 0.5,
           child: Row(
+            mainAxisSize: MainAxisSize.min,
             children: [
               IconButton(
                   onPressed: () {
