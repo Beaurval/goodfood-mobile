@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:either_dart/either.dart';
 import 'package:goodfood_mobile/core/failure.dart';
 import 'package:goodfood_mobile/data/api/config_api.dart';
+import 'package:goodfood_mobile/data/commandeController.dart';
 import 'package:goodfood_mobile/data/models/response/restaurant_response.dart';
 import 'package:riverpod/riverpod.dart';
 
@@ -11,10 +12,10 @@ final restaurantApiProvider = Provider<RestaurantApi>((ref) => RestaurantApi());
 
 class RestaurantApi {
   static const String baseUrl = ConfigApi.baseUrl;
-  static const String userEndpoint = ConfigApi.usersEndpoint;
+  static const String providerEndpoint = ConfigApi.providerEndpoint;
 
   Future<Either<Failure, List<RestaurantResponse>>> getRestaurants() async {
-    final response = await Dio().get("$baseUrl$userEndpoint");
+    final response = await Dio().get("$baseUrl$providerEndpoint");
     //récupère la réponse
     if (response.statusCode == 200) {
       final results = List<Map<String, dynamic>>.from(response.data);
@@ -28,7 +29,7 @@ class RestaurantApi {
   }
 
   Future<Either<Failure, List<RestaurantResponse>>> getDetailRestaurant(id) async {
-    final response = await Dio().get("$baseUrl$userEndpoint/${id}");
+    final response = await Dio().get("$baseUrl$providerEndpoint/${id}");
     //récupère la réponse
     if (response.statusCode == 200) {
       final results = List<Map<String, dynamic>>.from(response.data);

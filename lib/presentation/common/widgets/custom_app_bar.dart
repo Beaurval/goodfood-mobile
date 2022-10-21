@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:goodfood_mobile/presentation/account/screens/profile_screen.dart';
+import 'package:goodfood_mobile/presentation/commande/list_commande_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
@@ -22,7 +23,10 @@ class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
       centerTitle: true,
       actions: <Widget>[
         IconButton(
-            onPressed: () {}, iconSize: 30, icon: const Icon(Icons.search)),
+            onPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (_) => ListCommandeScreen()));
+            }, iconSize: 30, icon: const Icon(Icons.shopping_bag)),
         IconButton(
             onPressed: () {
               Navigator.push(context,

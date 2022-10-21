@@ -71,7 +71,7 @@ class LoginMethodScreen extends HookConsumerWidget {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => const RestaurantScreen()))
+                                    builder: (context) => HomeScreen()))
                           }
                       },
                       text: 'Se connecter par email',

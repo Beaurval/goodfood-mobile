@@ -7,8 +7,8 @@ import 'package:goodfood_mobile/data/models/request/create_user_request.dart';
 import 'package:goodfood_mobile/data/models/response/user_response.dart';
 import 'package:riverpod/riverpod.dart';
 
-import '../../core/exceptions/exceptions.dart';
-import '../../core/failure.dart';
+import 'package:goodfood_mobile/core/exceptions/exceptions.dart';
+import 'package:goodfood_mobile/core/failure.dart';
 
 final userApiProvider = Provider<UserApi>((ref) => UserApi());
 
