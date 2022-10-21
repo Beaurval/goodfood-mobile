@@ -2,7 +2,6 @@
 import 'package:either_dart/either.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:goodfood_mobile/data/models/request/create_user_with_role_request.dart';
-import 'package:goodfood_mobile/data/models/response/create_user__with_role_response.dart';
 import 'package:goodfood_mobile/data/models/response/user_response.dart';
 import 'package:riverpod/riverpod.dart';
 
@@ -12,6 +11,7 @@ import 'package:goodfood_mobile/domain/entities/user/user_account.dart';
 
 import '../../core/failure.dart';
 import '../../domain/repository/auth_repository.dart';
+import '../models/response/create_user__with_role_response.dart';
 
 final authRepositoryProvider = Provider<AuthRepository>(
     (ref) => AuthRepositoryImpl(ref.read(userApiProvider)));
@@ -71,7 +71,9 @@ class AuthRepositoryImpl implements AuthRepository {
     await firebaseRegistrationResult.right.user?.sendEmailVerification();
 
     try {
-      return Right((await _userApi.createUser(user)).toEntity());
+      return Right((await _userApi.createUser(
+              user, firebaseRegistrationResult.right.user!.uid))
+          .toEntity());
     } catch (e) {
       return const Left(Failure(message: 'Server error'));
     }

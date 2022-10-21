@@ -26,7 +26,7 @@ class SingUpScreen extends HookConsumerWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text("Connexion à l'application"),
+        title: const Text("Inscription"),
       ),
       body: SingleChildScrollView(
         child: Column(

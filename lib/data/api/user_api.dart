@@ -37,10 +37,19 @@ class UserApi {
     }
   }
 
-  Future<UserResponse> createUser(CreateUserRequest request) async {
+  Future<UserResponse> createUser(
+      CreateUserRequest request, String uuid) async {
+    CreateUserRequest httpRequest = CreateUserRequest(
+        email: request.email,
+        firstName: request.firstName,
+        lastName: request.lastName,
+        phoneNumber: request.phoneNumber,
+        password: request.password,
+        passwordConfirmation: request.passwordConfirmation,
+        uuid: uuid);
     try {
       final response = await Dio().post("$baseUrl$userEndpoint",
-          data: jsonEncode(request.toJson()),
+          data: jsonEncode(httpRequest.toJson()),
           options: Options(
               headers: {HttpHeaders.contentTypeHeader: "application/json"}));
       if (response.statusCode == 200) {
