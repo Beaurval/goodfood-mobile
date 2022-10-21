@@ -12,9 +12,7 @@ class ProfileScreen extends HookConsumerWidget {
         appBar: AppBar(
           title: const Text('Compte'),
         ),
-        body: SizedBox(
-            height: 160,
-            child: Card(
+        body: Card(
               color: const Color.fromARGB(255, 198, 220, 226),
               child: ListView(
                 children: <Widget>[
@@ -29,6 +27,14 @@ class ProfileScreen extends HookConsumerWidget {
                     leading: const Icon(Icons.person),
                     title: const Text('Informations du compte'),
                   ),
+                  ListTile(
+                    onTap: () {
+                      Navigator.popUntil(context, (route) => route.isFirst);
+                    },
+                    visualDensity: VisualDensity.compact,
+                    leading: const Icon(Icons.highlight_off),
+                    title: const Text('Se déconnecter'),
+                  ),
                   const ListTile(
                     leading: Icon(Icons.photo_album),
                     title: Text('Album'),
@@ -39,6 +45,6 @@ class ProfileScreen extends HookConsumerWidget {
                   ),
                 ],
               ),
-            )));
+            ));
   }
 }

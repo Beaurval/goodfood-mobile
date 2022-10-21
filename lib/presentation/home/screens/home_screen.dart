@@ -1,6 +1,7 @@
 import 'package:either_dart/either.dart';
 import 'package:flutter/material.dart';
 import 'package:goodfood_mobile/core/failure.dart';
+import 'package:goodfood_mobile/data/commandeController.dart';
 import 'package:goodfood_mobile/domain/entities/user/restaurant.dart';
 import 'package:goodfood_mobile/presentation/common/widgets/custom_app_bar.dart';
 import 'package:goodfood_mobile/presentation/home/viewmodels/home_screen_view_model.dart';
@@ -13,6 +14,8 @@ class HomeScreen extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     var viewModel = ref.watch(homeScreenViewModelProvider);
+    CommandeController.panier = [];
+    CommandeController.produit = [];
     return Scaffold(
       appBar: const CustomAppBar(),
       body: FutureBuilder<Either<Failure, List<Restaurant>>>(
