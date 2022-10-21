@@ -1,6 +1,9 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:either_dart/either.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:goodfood_mobile/data/models/request/create_user_with_role_request.dart';
+import 'package:goodfood_mobile/data/models/request/update_user_request.dart';
+import 'package:goodfood_mobile/data/models/response/user_response.dart';
 import 'package:riverpod/riverpod.dart';
 
 import 'package:goodfood_mobile/data/api/user_api.dart';
@@ -9,6 +12,7 @@ import 'package:goodfood_mobile/domain/entities/user/user_account.dart';
 
 import '../../core/failure.dart';
 import '../../domain/repository/auth_repository.dart';
+import '../models/response/create_user__with_role_response.dart';
 
 final authRepositoryProvider = Provider<AuthRepository>(
     (ref) => AuthRepositoryImpl(ref.read(userApiProvider)));
@@ -68,7 +72,9 @@ class AuthRepositoryImpl implements AuthRepository {
     await firebaseRegistrationResult.right.user?.sendEmailVerification();
 
     try {
-      return Right((await _userApi.createUser(user)).toEntity());
+      return Right((await _userApi.createUser(
+              user, firebaseRegistrationResult.right.user!.uid))
+          .toEntity());
     } catch (e) {
       return const Left(Failure(message: 'Server error'));
     }
@@ -98,5 +104,38 @@ class AuthRepositoryImpl implements AuthRepository {
       return const Left(
           Failure(message: 'Une erreur s\'est produite avec firebase'));
     }
+  }
+
+  @override
+  Future<Failure?> createUserWithRole(CreateUserWithRoleRequest model) async {
+    CreateUserWithRoleResponse userResponse;
+    try {
+      userResponse = await _userApi.createUserWithRole(model);
+    } on Failure catch (err) {
+      return err;
+    }
+
+    if (model.email != null && userResponse.password != null) {
+      var newUser = CreateUserRequest(
+          email: model.email,
+          firstName: model.firstName,
+          lastName: model.lastName,
+          password: userResponse.password,
+          passwordConfirmation: userResponse.password,
+          phoneNumber: model.phoneNumber,
+          roleId: model.roleId);
+
+      var singUpResult =
+          await addUserToFirebase(newUser.email!, newUser.password!);
+      if (singUpResult.isRight) {
+        _userApi.updateUser(UpdateUserRequest(
+            id: userResponse.id!, uuid: singUpResult.right.user?.uid));
+      }
+
+      if (singUpResult.isLeft) {
+        return singUpResult.left;
+      }
+    }
+    return null;
   }
 }
