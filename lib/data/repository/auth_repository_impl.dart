@@ -2,6 +2,7 @@
 import 'package:either_dart/either.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:goodfood_mobile/data/models/request/create_user_with_role_request.dart';
+import 'package:goodfood_mobile/data/models/request/update_user_request.dart';
 import 'package:goodfood_mobile/data/models/response/user_response.dart';
 import 'package:riverpod/riverpod.dart';
 
@@ -113,7 +114,7 @@ class AuthRepositoryImpl implements AuthRepository {
     } on Failure catch (err) {
       return err;
     }
-    var a = 1;
+
     if (model.email != null && userResponse.password != null) {
       var newUser = CreateUserRequest(
           email: model.email,
@@ -124,7 +125,12 @@ class AuthRepositoryImpl implements AuthRepository {
           phoneNumber: model.phoneNumber,
           roleId: model.roleId);
 
-      var singUpResult = await signUpUser(newUser);
+      var singUpResult =
+          await addUserToFirebase(newUser.email!, newUser.password!);
+      if (singUpResult.isRight) {
+        _userApi.updateUser(UpdateUserRequest(
+            id: userResponse.id!, uuid: singUpResult.right.user?.uid));
+      }
 
       if (singUpResult.isLeft) {
         return singUpResult.left;

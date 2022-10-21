@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 
 class CreateUserWithRoleResponse extends Equatable {
+  final String? id;
   final String? email;
   final String? firstName;
   final String? lastName;
@@ -9,7 +10,8 @@ class CreateUserWithRoleResponse extends Equatable {
   final int? roleId;
 
   const CreateUserWithRoleResponse(
-      {required this.email,
+      {this.id,
+      required this.email,
       required this.firstName,
       required this.lastName,
       this.password,
@@ -18,10 +20,11 @@ class CreateUserWithRoleResponse extends Equatable {
 
   @override
   List<Object?> get props =>
-      [email, firstName, lastName, phoneNumber, roleId, password];
+      [id, email, firstName, lastName, phoneNumber, roleId, password];
 
   factory CreateUserWithRoleResponse.fromMap(Map<String, dynamic> map) {
     return CreateUserWithRoleResponse(
+        id: map['id'].toString(),
         email: map['email'],
         firstName: map['firstName'],
         lastName: map['lastName'],
