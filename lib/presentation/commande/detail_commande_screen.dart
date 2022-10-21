@@ -2,33 +2,25 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
 class DetailCommandeScreen extends StatefulWidget {
+ final data;
+ final restaurant;
 
-  DetailCommandeScreen();
+  DetailCommandeScreen(this.data, this.restaurant);
 
   @override
   State<DetailCommandeScreen> createState() =>
-      _DetailCommandeScreenState();
+      _DetailCommandeScreenState(this.data, this.restaurant);
 }
 
 class _DetailCommandeScreenState extends State<DetailCommandeScreen> {
+  final data;
+  final restaurant;
 
-  _DetailCommandeScreenState();
+  _DetailCommandeScreenState(this.data, this.restaurant);
 
   @override
   void initState() {
   }
-
-  void getLivraisonData() async {
-    try {
-      final response = await Dio().get("http://20.124.42.95/api/livraison/init");
-      if (response.statusCode == 200) {
-      } else {
-      }
-    } on DioError catch (err) {
-      debugPrint(err.response?.statusMessage ?? 'Something went wrong');
-    }
-  }
-
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +32,9 @@ class _DetailCommandeScreenState extends State<DetailCommandeScreen> {
         ),
         body: ListView(
           children: [
-            Text("sldjkhjkdfhjkdhf")
+            Text(data["created"]),
+            Text(data["id"].toString()),
+            Text(restaurant["name"]),
           ],
         ));
   }

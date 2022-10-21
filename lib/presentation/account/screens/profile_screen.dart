@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -18,33 +19,20 @@ class ProfileScreen extends HookConsumerWidget {
                 children: <Widget>[
                   ListTile(
                     onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (_) => HomeScreen()));
-                    },
-                    visualDensity: VisualDensity.compact,
-                    leading: const Icon(Icons.person),
-                    title: const Text('Informations du compte'),
-                  ),
-                  ListTile(
-                    onTap: () {
-                      Navigator.popUntil(context, (route) => route.isFirst);
+                      _signOut().then((value) {
+                        Navigator.popUntil(context, (route) => route.isFirst);
+                      });
                     },
                     visualDensity: VisualDensity.compact,
                     leading: const Icon(Icons.highlight_off),
                     title: const Text('Se déconnecter'),
                   ),
-                  const ListTile(
-                    leading: Icon(Icons.photo_album),
-                    title: Text('Album'),
-                  ),
-                  const ListTile(
-                    leading: Icon(Icons.phone),
-                    title: Text('Phone'),
-                  ),
                 ],
               ),
             ));
+  }
+
+  Future <void> _signOut()  async{
+    await FirebaseAuth.instance.signOut();
   }
 }

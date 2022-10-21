@@ -40,26 +40,26 @@ class LoginMethodScreen extends HookConsumerWidget {
                 ),
               ),
               Wrap(runSpacing: -25, children: <Widget>[
-                Container(
-                    padding: const EdgeInsets.only(top: 50.00),
-                    child: SignInButton(
-                      Buttons.Google,
-                      onPressed: () => {},
-                      text: 'Continuer avec Google',
-                    )),
-                Container(
-                    padding: const EdgeInsets.only(top: 50.00),
-                    child: SignInButton(
-                      Buttons.Facebook,
-                      onPressed: () => {},
-                      text: 'Continuer avec Facebook',
-                    )),
+                // Container(
+                //     padding: const EdgeInsets.only(top: 50.00),
+                //     child: SignInButton(
+                //       Buttons.Google,
+                //       onPressed: () => {},
+                //       text: 'Continuer avec Google',
+                //     )),
+                // Container(
+                //     padding: const EdgeInsets.only(top: 50.00),
+                //     child: SignInButton(
+                //       Buttons.Facebook,
+                //       onPressed: () => {},
+                //       text: 'Continuer avec Facebook',
+                //     )),
                 Container(
                     padding: const EdgeInsets.only(top: 50.00),
                     child: SignInButton(
                       Buttons.Email,
                       onPressed: () => {
-                        if (auth.currentUser != null)
+                        if (auth.currentUser == null)
                           {
                             Navigator.push(
                                 context,

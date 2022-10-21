@@ -53,7 +53,7 @@ class _ListCommandeScreenState extends State<ListCommandeScreen> {
             trailing: Icon(Icons.arrow_forward_ios_outlined),
             onTap: () {
               Navigator.push(context,
-                  MaterialPageRoute(builder: (_) => DetailCommandeScreen()));
+                  MaterialPageRoute(builder: (_) => DetailCommandeScreen(value, restaurant)));
             },
           ));
         });

@@ -50,7 +50,7 @@ class CommandeController {
           data: data,
           options: Options(
               headers: {HttpHeaders.contentTypeHeader: "application/json"}));
-      return response.data!;
+      return response.statusCode!;
     } on DioError catch (err) {
       debugPrint(err.response?.statusMessage ?? 'Something went wrong');
       return 500;

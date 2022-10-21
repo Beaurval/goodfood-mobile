@@ -152,8 +152,7 @@ class _CommandeScreenState extends State<CommandeScreen> {
                   style: style,
                   onPressed: () {
                     CommandeController.createCommande().then((e) {
-                      if (e != 500 && e != -1) {
-                        CommandeController.createLivraison(e.id);
+                      if (e == 200) {
                         showAlertDialog(
                             context, "La commande a bien été payé", () {
                           Navigator.push(
