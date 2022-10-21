@@ -13,7 +13,29 @@ class CommandeController {
   static int? userId;
   static double? tips = 0;
 
-  static Future<int> createCommande() async {
+  static Future<int> createLivraison(int commandeId) async {
+    try {
+      Map data = {
+        "commande_id": commandeId,
+        "livreur_id": null,
+        "restaurant_id": restaurantId,
+        "adresse_id": adresse,
+        "client_id": userId
+      };
+      final response = await Dio().post(
+          "http://20.124.42.95/api/livraison/init",
+          data: data,
+          options: Options(
+              headers: {HttpHeaders.contentTypeHeader: "application/json"}));
+      debugPrint(response.statusCode.toString());
+      return response.statusCode!;
+    } on DioError catch (err) {
+      debugPrint(err.response?.statusMessage ?? 'Something went wrong');
+      return -1;
+    }
+  }
+
+  static Future<dynamic> createCommande() async {
     try {
       debugPrint(tips.toString());
       debugPrint(restaurantId.toString());
@@ -28,8 +50,7 @@ class CommandeController {
           data: data,
           options: Options(
               headers: {HttpHeaders.contentTypeHeader: "application/json"}));
-      debugPrint(response.statusCode.toString());
-      return response.statusCode!;
+      return response.data!;
     } on DioError catch (err) {
       debugPrint(err.response?.statusMessage ?? 'Something went wrong');
       return 500;
