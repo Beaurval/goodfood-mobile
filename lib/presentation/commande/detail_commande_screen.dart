@@ -22,7 +22,7 @@ class _DetailCommandeScreenState extends State<DetailCommandeScreen> {
 
     return Scaffold(
         appBar: AppBar(
-          title: Text("GoodFood : Vos Commande"),
+          title: Text("GoodFood : Commande"),
           backgroundColor: const Color.fromARGB(255, 0, 100, 188),
           automaticallyImplyLeading: true,
         ),

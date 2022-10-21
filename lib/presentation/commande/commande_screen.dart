@@ -19,6 +19,7 @@ class _CommandeScreenState extends State<CommandeScreen> {
   final callback;
   var price = 0.0;
   var tips = 0.0;
+  int address = 0;
 
   _CommandeScreenState(this.produits, this.callback);
 
@@ -51,8 +52,18 @@ class _CommandeScreenState extends State<CommandeScreen> {
     return list;
   }
 
-  showAlertDialog(BuildContext context, String message, callback) {
+  List<DropdownMenuItem<dynamic>> buildDropDownButton() {
+    List<DropdownMenuItem<dynamic>> list = [];
+    CommandeController.panier.asMap().forEach((key, value) {});
+    list.add(DropdownMenuItem(value: 0, child: Text("Option 1")));
+    list.add(DropdownMenuItem(value: 1, child: Text("Option 2")));
+    list.add(DropdownMenuItem(value: 2, child: Text("Option 3")));
+    list.add(DropdownMenuItem(value: 3, child: Text("Option 4")));
+    list.add(DropdownMenuItem(value: 4, child: Text("Option 5")));
+    return list;
+  }
 
+  showAlertDialog(BuildContext context, String message, callback) {
     Widget continueButton = TextButton(
       child: Text("Retour"),
       onPressed: callback,
@@ -86,7 +97,7 @@ class _CommandeScreenState extends State<CommandeScreen> {
 
     return Scaffold(
         appBar: AppBar(
-          title: Text("GoodFood : Commande"),
+          title: Text("GoodFood : Récap Commande"),
           backgroundColor: const Color.fromARGB(255, 0, 100, 188),
           automaticallyImplyLeading: true,
         ),
@@ -141,19 +152,21 @@ class _CommandeScreenState extends State<CommandeScreen> {
                   style: style,
                   onPressed: () {
                     CommandeController.createCommande().then((e) {
-                      if(e == 200){
-                        showAlertDialog(context, "La commande a bien été envoyé",() {
+                      if (e == 200) {
+                        showAlertDialog(
+                            context, "La commande a bien été payé", () {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
                                   builder: (context) => HomeScreen()));
                         });
-                      }else {
-                        showAlertDialog(context, "Erreur lors de l'envoi de la commande", () {});
+                      } else {
+                        showAlertDialog(context,
+                            "Erreur lors du paiement de la commande", () {});
                       }
                     });
                   },
-                  child: const Text('Valider la Commande'),
+                  child: const Text('Payer la Commande'),
                 ))
               ],
             )),
@@ -162,12 +175,55 @@ class _CommandeScreenState extends State<CommandeScreen> {
           // width: MediaQuery.of(context).size.height * 0.5 > 400.0
           //     ? MediaQuery.of(context).size.height * 0.5
           //     : 400.0,
-          child: ListView(
-            children: [
-              ListTile(title: Text("Récap de la commande")),
-              ...buildPanier(),
-            ],
-          ),
+          child:
+              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Container(
+                margin: EdgeInsets.all(10),
+                child: Text("Selection d'adresse de livraison",
+                    style: TextStyle(fontSize: 18))),
+            Container(
+                height: 50,
+                width: MediaQuery.of(context).size.height * 0.5 > 400.0
+                    ? MediaQuery.of(context).size.height * 0.5
+                    : 400.0,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Container(
+                        width: MediaQuery.of(context).size.width * 0.6,
+                        child: DropdownButton(
+                            isExpanded: true,
+                            value: address,
+                            hint: Text("Veuillez choisir une adresse"),
+                            alignment: Alignment.centerRight,
+                            items: buildDropDownButton(),
+                            onChanged: (value) {
+                              setState(() {
+                                address = value;
+                              });
+                            })),
+                    ElevatedButton(
+                      child: Icon(Icons.add),
+                      onPressed: () {},
+                    )
+                  ],
+                )),
+            const Divider(
+              color: Colors.grey,
+              height: 25,
+            ),
+            Container(
+                height: MediaQuery.of(context).size.height - 350,
+                width: MediaQuery.of(context).size.height * 0.5 > 400.0
+                    ? MediaQuery.of(context).size.height * 0.5
+                    : 400.0,
+                child: ListView(
+                  children: [
+                    ListTile(title: Text("Récap du panier")),
+                    ...buildPanier(),
+                  ],
+                ))
+          ]),
         )));
   }
 }

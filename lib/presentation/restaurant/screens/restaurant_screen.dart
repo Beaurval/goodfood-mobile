@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:goodfood_mobile/data/api/config_api.dart';
 import 'package:goodfood_mobile/data/commandeController.dart';
 import 'package:goodfood_mobile/domain/entities/user/restaurant.dart';
 import 'package:goodfood_mobile/presentation/commande/commande_screen.dart';
@@ -26,7 +27,7 @@ class _RestaurantScreenState extends State<RestaurantScreen> {
 
   Future<List<Map<String, dynamic>>> getProduitRestaurant() async {
     final response =
-        await Dio().get("http://20.124.42.95/api/products/provider/1");
+        await Dio().get("${ConfigApi.baseUrl+ConfigApi.productsEndpoint+ConfigApi.providerEndpoint}/" + this.data.id.toString());
     //récupère la réponse
     if (response.statusCode == 200) {
       final results = List<Map<String, dynamic>>.from(response.data);
