@@ -2,7 +2,8 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
-import 'package:goodfood_mobile/data/models/request/create_user__with_role_request.dart';
+import 'package:goodfood_mobile/data/models/request/create_user_with_role_request.dart';
+import 'package:goodfood_mobile/data/models/response/create_user__with_role_response.dart';
 import 'package:goodfood_mobile/data/models/request/create_user_request.dart';
 import 'package:goodfood_mobile/data/models/response/user_response.dart';
 import 'package:riverpod/riverpod.dart';
@@ -13,7 +14,7 @@ import '../../core/failure.dart';
 final userApiProvider = Provider<UserApi>((ref) => UserApi());
 
 class UserApi {
-  static const String baseUrl = "http://20.124.42.95/api";
+  static const String baseUrl = "http://10.176.135.120:5001/api";
   static const String userEndpoint = "/users";
 
   Future<List<UserResponse>> getUsers() async {
@@ -54,22 +55,22 @@ class UserApi {
     }
   }
 
-  Future<UserResponse> createUserWithRole(
-      CreateUserRequestWithRole request) async {
+  Future<CreateUserWithRoleResponse> createUserWithRole(
+      CreateUserWithRoleRequest request) async {
     try {
       final response = await Dio().post("$baseUrl$userEndpoint/roles",
           data: jsonEncode(request.toJson()),
           options: Options(
               headers: {HttpHeaders.contentTypeHeader: "application/json"}));
       if (response.statusCode == 200) {
-        return UserResponse.fromMap(response.data);
+        return CreateUserWithRoleResponse.fromMap(response.data);
       }
-      throw ServerException();
+      throw Failure(message: 'Veuillez vérifier vos données');
     } on DioError catch (err) {
       throw Failure(
           message: err.response?.statusMessage ?? 'Something went wrong');
     } on SocketException catch (err) {
-      throw const Failure(message: 'Please check your connexion.');
+      throw const Failure(message: 'Vérifiez votre connextion.');
     }
   }
 }

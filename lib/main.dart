@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
           bottomSheetTheme:
               const BottomSheetThemeData(backgroundColor: Colors.transparent)),
-      home: AdminHomeScreen(),
+      home: LoginMethodScreen(),
     );
   }
 }

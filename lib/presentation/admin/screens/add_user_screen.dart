@@ -1,8 +1,13 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:goodfood_mobile/data/api/user_api.dart';
-import 'package:goodfood_mobile/data/models/request/create_user__with_role_request.dart';
+import 'package:goodfood_mobile/data/models/request/create_user_with_role_request.dart';
+import 'package:goodfood_mobile/data/models/response/create_user__with_role_response.dart';
 import 'package:goodfood_mobile/data/models/request/create_user_request.dart';
+import 'package:goodfood_mobile/data/repository/auth_repository_impl.dart';
+import 'package:goodfood_mobile/domain/repository/auth_repository.dart';
 import 'package:goodfood_mobile/domain/use_cases/sign_up_usecase.dart';
 import 'package:goodfood_mobile/presentation/authentication/screens/login_method/email_login_screen.dart';
 import 'package:goodfood_mobile/presentation/authentication/viewmodels/sign_up/sign_up_view_model.dart';
@@ -11,12 +16,13 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 class AddUserScreen extends HookConsumerWidget {
   final emailcon = TextEditingController();
   final passwordcon = TextEditingController();
-
+  final FirebaseAuth auth = FirebaseAuth.instance;
   AddUserScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    UserApi _api = UserApi();
+    AuthRepository _repository = ref.watch(authRepositoryProvider);
+    var user = auth.currentUser;
 
     const List<String> list = <String>[
       'Livreur',
@@ -122,12 +128,13 @@ class AddUserScreen extends HookConsumerWidget {
                   color: Colors.blue, borderRadius: BorderRadius.circular(20)),
               child: TextButton(
                 onPressed: () async {
-                  _api.createUserWithRole(CreateUserRequestWithRole(
+                  _repository.createUserWithRole(CreateUserWithRoleRequest(
                       email: emailController.text,
                       firstName: firstNameController.text,
                       lastName: lastNameController.text,
                       phoneNumber: phoneController.text,
-                      roleId: list.indexOf(selectedValue.value)));
+                      roleId:
+                          (list.indexOf(selectedValue.value) + 1).toString()));
                 },
                 child: const Text(
                   'Confirmer',
