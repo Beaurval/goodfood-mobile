@@ -14,7 +14,7 @@ import '../../core/failure.dart';
 final userApiProvider = Provider<UserApi>((ref) => UserApi());
 
 class UserApi {
-  static const String baseUrl = "http://10.176.135.120:5001/api";
+  static const String baseUrl = "http://20.124.42.95/api";
   static const String userEndpoint = "/users";
 
   Future<List<UserResponse>> getUsers() async {
